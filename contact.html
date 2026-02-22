@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - UOS GPA/CGPA Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .success-message {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-800"><i class="fas fa-calculator mr-2"></i>UOS
+                        Calculator</span>
+                </div>
+                <div class="hidden md:flex space-x-4 lg:space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+                    <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+                    <a href="cgpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+                    <a href="aboutus.html" class="text-gray-600 hover:text-blue-600 transition duration-200">About Us</a>
+                    <a href="contact.html" class="text-blue-800 font-semibold transition duration-200">Contact Us</a>
+                    <a href="user-manual.html" class="text-gray-600 hover:text-blue-600 transition duration-200">User Manual</a>
+                    <a href="privacy.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Privacy Policy</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-white z-50 flex flex-col items-center justify-center space-y-8 text-lg">
+        <button id="close-menu" class="absolute top-4 right-4 text-2xl text-gray-600"><i
+                class="fas fa-times"></i></button>
+        <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+        <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+        <a href="cgpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+        <a href="aboutus.html" class="text-gray-600 hover:text-blue-600 transition duration-200">About Us</a>
+        <a href="contact.html" class="text-blue-800 font-semibold transition duration-200">Contact Us</a>
+        <a href="user-manual.html" class="text-gray-600 hover:text-blue-600 transition duration-200">User Manual</a>
+        <a href="privacy.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Privacy Policy</a>
+        
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-8 md:mb-12 fade-in">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contact Us</h1>
+            <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2">Have questions or need support? We're
+                here to help you
+                with any inquiries about our GPA/CGPA calculator.</p>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message"
+            class="success-message bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 md:mb-8 rounded fade-in">
+            <div class="flex items-center">
+                <div class="py-1"><i class="fas fa-check-circle text-green-500 mr-3"></i></div>
+                <div>
+                    <p class="font-semibold">Thank you for your message!</p>
+                    <p class="text-sm">We'll get back to you within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Content -->
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <!-- Contact Information -->
+            <div class="fade-in">
+                <div class="bg-white rounded-xl shadow-md p-4 md:p-6 contact-card h-full">
+                    <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4 md:mb-6">Get in Touch</h2>
+
+                    <div class="space-y-4 md:space-y-6">
+                        <div class="flex items-start">
+                            <div
+                                class="bg-blue-100 text-blue-600 rounded-full h-10 w-10 md:h-12 md:w-12 flex items-center justify-center mr-3 md:mr-4">
+                                <i class="fas fa-map-marker-alt text-sm md:text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 text-sm md:text-base">Address</h3>
+                                <p class="text-gray-600 text-sm md:text-base">University of Swabi<br>Swabi,
+                                    KPK<br>Pakistan</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="bg-blue-100 text-blue-600 rounded-full h-10 w-10 md:h-12 md:w-12 flex items-center justify-center mr-3 md:mr-4">
+                                <i class="fas fa-phone text-sm md:text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 text-sm md:text-base">Phone Number</h3>
+                                <p class="text-gray-600 text-sm md:text-base"><a href="tel:+92 3137700673"><strong>+92 3137700673</strong></a></p>
+                                <p class="text-xs md:text-sm text-gray-500">Mon-Fri, 9:00 AM - 5:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div
+                                class="bg-blue-100 text-blue-600 rounded-full h-10 w-10 md:h-12 md:w-12 flex items-center justify-center mr-3 md:mr-4">
+                                <i class="fas fa-envelope text-sm md:text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 text-sm md:text-base">Email Address</h3>
+                                <p class="text-gray-600 text-sm md:text-base"><a href="mailto:salmankhan334356@gmail.com"><strong>salmankhan334356@gmail.com</strong></a></p>
+                                <p class="text-xs md:text-sm text-gray-500">We respond within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+                        <h3 class="font-semibold text-gray-800 mb-3 md:mb-4 text-sm md:text-base">Follow Us</h3>
+                        <div class="flex space-x-3 md:space-x-4">
+                            <a href="https://www.linkedin.com/in/salman-khan-saim?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                class="bg-gray-100 text-gray-600 rounded-full h-8 w-8 md:h-10 md:w-10 flex items-center justify-center hover:bg-blue-100 hover:text-blue-600 transition duration-200">
+                                <i class="fab fa-linkedin-in text-xs md:text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="fade-in">
+                <div class="bg-white rounded-xl shadow-md p-4 md:p-6 contact-card h-full">
+                    <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4 md:mb-6">Send us a Message</h2>
+
+                    <!-- Form with Formspree Integration -->
+                    <form id="contact-form" action="https://formspree.io/f/xyzdlwjj" method="POST">
+                        <div class="mb-4 md:mb-6">
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                            <input type="text" id="name" name="name"
+                                class="input-field w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="mb-4 md:mb-6">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email
+                                Address</label>
+                            <input type="email" id="email" name="email"
+                                class="input-field w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="mb-4 md:mb-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <input type="text" id="subject" name="subject"
+                                class="input-field w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                placeholder="What is this regarding?" required>
+                        </div>
+
+                        <div class="mb-4 md:mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your
+                                Message</label>
+                            <textarea id="message" name="message" rows="4"
+                                class="input-field w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                placeholder="Type your message here..." required></textarea>
+                        </div>
+
+                        <!-- Formspree hidden fields -->
+                        <input type="hidden" name="_subject" value="New contact form submission from UOS Calculator">
+                        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 md:py-3 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12 mt-8 md:mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 md:mb-4">UOS Calculator</h3>
+                    <p class="text-gray-400 text-sm md:text-base">A tool by <strong>Salman Khan and Shayan Asim CS Batch 12</strong> to help students calculate their GPA and CGPA accurately.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+                    <ul class="space-y-1 md:space-y-2">
+                        <li><a href="https://uoswabi.edu.pk/" target="_blank"
+                                class="text-gray-400 hover:text-white transition duration-200 text-sm md:text-base">University
+                                of Swabi</a></li>
+                        <li><a href="index.html"
+                                class="text-gray-400 hover:text-white transition duration-200 text-sm md:text-base">Home</a>
+                        </li>
+                        <li><a href="gpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200 text-sm md:text-base">GPA
+                                Calculator</a></li>
+                        <li><a href="cgpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200 text-sm md:text-base">CGPA
+                                Calculator</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 md:mb-4">Contact Info</h3>
+                    <ul class="space-y-1 md:space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-gray-400 mr-2 md:mr-3 text-sm md:text-base"></i>
+                            <span class="text-gray-400 text-sm md:text-base"><a href="tel:+92 3137700673"><strong>+92 3137700673</strong></a></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-2 md:mr-3 text-sm md:text-base"></i>
+                            <span class="text-gray-400 text-sm md:text-base"><a href="mailto:salmankhan334356@gmail.com"><strong>salmankhan334356@gmail.com</strong></a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400 text-sm md:text-base">
+                <p>© 2023 University of Swabi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+
+        document.getElementById('close-menu').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+
+        // Form submission with Formspree
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            // You can add any pre-submission logic here
+            // Formspree will handle the actual submission
+
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+            submitButton.disabled = true;
+
+            // Formspree will handle the rest, but we'll still show our success message
+            // after a short delay to simulate successful submission
+            setTimeout(() => {
+                const successMessage = document.getElementById('success-message');
+                successMessage.classList.add('show');
+
+                // Reset form
+                this.reset();
+
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+
+                // Restore button state
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }, 1500);
+
+            // Let Formspree handle the actual submission
+            // Don't call e.preventDefault() - we want the form to submit normally
+        });
+
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            observer.observe(element);
+        });
+    </script>
+</body>
+
+</html>

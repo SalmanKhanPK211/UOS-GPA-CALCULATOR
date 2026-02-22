@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - University of Swabi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .policy-section {
+            transition: all 0.3s ease;
+        }
+
+        .policy-section:hover {
+            transform: translateY(-3px);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: none;
+            z-index: 99;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: rgba(59, 130, 246, 0.2);
+            z-index: -1;
+            transition: height 0.3s ease;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-800"><i class="fas fa-calculator mr-2"></i>UOS
+                        Calculator</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+                    <a href="gpa-calculator.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+                    <a href="cgpa-calculator.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+                    <a href="aboutus.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Contact
+                        Us</a>
+                    <a href="user-manual.html" class="text-gray-600 hover:text-blue-600 transition duration-200">User Manual</a>
+                    <a href="privacy.html" class="text-blue-800 font-semibold transition duration-200">Privacy
+                        Policy</a>
+
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-white z-50 flex flex-col items-center justify-center space-y-8 text-lg">
+        <button id="close-menu" class="absolute top-4 right-4 text-2xl text-gray-600"><i
+                class="fas fa-times"></i></button>
+        <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+        <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+        <a href="cgpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+        <a href="aboutus.html" class="text-gray-600 hover:text-blue-600 transition duration-200">About Us</a>
+        <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Contact Us</a>
+        <a href="user-manual.html" class="text-gray-600 hover:text-blue-600 transition duration-200">User Manual</a>
+        <a href="privacy.html" class="text-blue-800 font-semibold transition duration-200">Privacy Policy</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Privacy Policy</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Last updated: November 15, 2023</p>
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Data
+                    Protection</span>
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">User Rights</span>
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transparency</span>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 sticky top-20 z-10 fade-in">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Navigation</h2>
+            <div class="flex flex-wrap gap-3">
+                <a href="#data-collection"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Data
+                    Collection</a>
+                <a href="#data-usage"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Data
+                    Usage</a>
+                <a href="#data-protection"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Data
+                    Protection</a>
+                <a href="#cookies"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Cookies</a>
+                <a href="#rights"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Your
+                    Rights</a>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Content -->
+        <div class="space-y-8">
+            <!-- Introduction -->
+            <section id="introduction" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Introduction</h2>
+                <p class="text-gray-600 mb-4">At University of Swabi's GPA/CGPA Calculator, we take your privacy
+                    seriously. This Privacy Policy describes how we collect, use, and protect your personal information
+                    when you use our calculator tools.</p>
+                <p class="text-gray-600">By using our services, you agree to the collection and use of information in
+                    accordance with this policy.</p>
+            </section>
+
+            <!-- Data Collection -->
+            <section id="data-collection" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Data Collection</h2>
+                <p class="text-gray-600 mb-4">We collect the following types of information:</p>
+                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                    <li><span class="highlight font-medium">Academic Information</span>: Department, semester, subjects,
+                        grades, and credit hours that you input into our calculators</li>
+                    <li><span class="highlight font-medium">Usage Data</span>: Information on how you use our
+                        calculators, including time spent, features used, and navigation patterns</li>
+                    <li><span class="highlight font-medium">Technical Information</span>: Browser type, device
+                        information, IP address, and operating system for analytical purposes</li>
+                </ul>
+            </section>
+
+            <!-- Data Usage -->
+            <section id="data-usage" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">How We Use Your Data</h2>
+                <p class="text-gray-600 mb-4">We use the collected data for the following purposes:</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 text-xl mb-2"><i class="fas fa-calculator"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Provide Services</h3>
+                        <p class="text-gray-600 text-sm">To calculate and display your GPA/CGPA results accurately</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 text-xl mb-2"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Improve Our Tools</h3>
+                        <p class="text-gray-600 text-sm">To analyze usage patterns and enhance user experience</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 text-xl mb-2"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Ensure Security</h3>
+                        <p class="text-gray-600 text-sm">To monitor and prevent fraudulent activities</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 text-xl mb-2"><i class="fas fa-comments"></i></div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Communicate</h3>
+                        <p class="text-gray-600 text-sm">To respond to your inquiries and provide support</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Protection -->
+            <section id="data-protection" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Data Protection</h2>
+                <p class="text-gray-600 mb-4">We implement appropriate security measures to protect your personal
+                    information:</p>
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 text-green-600 mt-1"><i class="fas fa-lock"></i></div>
+                        <div class="ml-3">
+                            <p class="text-green-700 text-sm"><span class="font-medium">Local Storage:</span> Your
+                                academic data is stored locally in your browser and is not transmitted to our servers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                    <li>All data processing occurs client-side in your browser</li>
+                    <li>We don't store your personal academic information on our servers</li>
+                    <li>We use industry-standard security practices to protect any metadata we collect</li>
+                </ul>
+            </section>
+
+            <!-- Cookies -->
+            <section id="cookies" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Cookies and Tracking</h2>
+                <p class="text-gray-600 mb-4">We use minimal cookies and similar tracking technologies:</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type</th>
+                                <th scope="col"
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Purpose</th>
+                                <th scope="col"
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-700">Essential</td>
+                                <td class="px-4 py-4 text-sm text-gray-600">Remember your preferences and selections
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">Session</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-700">Analytical
+                                </td>
+                                <td class="px-4 py-4 text-sm text-gray-600">Understand how visitors use our calculator
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">1 year</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- User Rights -->
+            <section id="rights" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your Rights</h2>
+                <p class="text-gray-600 mb-4">You have the following rights regarding your personal data:</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-eye text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-800">Right to Access</h3>
+                            <p class="mt-2 text-gray-600">You can request details about the personal data we hold about
+                                you.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-edit text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-800">Right to Rectification</h3>
+                            <p class="mt-2 text-gray-600">You can update or correct your personal data at any time.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-trash-alt text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-800">Right to Erasure</h3>
+                            <p class="mt-2 text-gray-600">You can request deletion of your personal data from our
+                                systems.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-ban text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-800">Right to Object</h3>
+                            <p class="mt-2 text-gray-600">You can object to certain types of processing of your personal
+                                data.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section id="contact" class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
+                <p class="text-gray-600 mb-4">If you have any questions about this Privacy Policy, please contact us:
+                </p>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                        <span class="text-gray-800 font-medium">Email:</span>
+                        <span class="ml-2 text-gray-600"><a href="mailto:salmankhan334356@gmail.com"><strong>salmankhan334356@gmail.com</strong></a></span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-blue-600 mr-3"></i>
+                        <span class="text-gray-800 font-medium">Response Time:</span>
+                        <span class="ml-2 text-gray-600">Within 48 hours</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Changes -->
+            <section class="policy-section bg-white rounded-xl shadow-md p-6 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Changes to This Policy</h2>
+                <p class="text-gray-600">We may update our Privacy Policy from time to time. We will notify you of any
+                    changes by posting the new Privacy Policy on this page and updating the "Last updated" date at the
+                    top of this Privacy Policy.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-200">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">UOS Calculator</h3>
+                    <p class="text-gray-400">A tool by <strong>Salman Khan and Shayan Asim CS Batch 12</strong> to help
+                        students calculate their GPA and CGPA
+                        accurately.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://uoswabi.edu.pk/"
+                                class="text-gray-400 hover:text-white transition duration-200">University of
+                                Swabi</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-200">Home</a>
+                        </li>
+                        <li><a href="gpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">GPA Calculator</a></li>
+                        <li><a href="cgpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">CGPA Calculator</a></li>
+
+                        <li><a href="privacy.html"
+                                class="text-gray-400 hover:text-white transition duration-200">Privacy
+                                Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-gray-400 mr-3"></i>
+                            <span class="text-gray-400"><a href="#">University of Swabi, Swabi, KPK, Pakistan</a></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-3"></i>
+                            <span class="text-gray-400"><a href="mailto:samlankhan334356@gmail.com"><strong>samlankhan334356@gmail.com</strong></a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 University of Swabi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+
+        document.getElementById('close-menu').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            observer.observe(element);
+        });
+    </script>
+</body>
+
+</html>

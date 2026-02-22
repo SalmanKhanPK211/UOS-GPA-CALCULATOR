@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator - University of Swabi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .gpa-input {
+            transition: all 0.3s ease;
+        }
+
+        .gpa-input:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .semester-card {
+            transition: all 0.3s ease;
+        }
+
+        .semester-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-800"><i class="fas fa-calculator mr-2"></i>UOS
+                        Calculator</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
+                    <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600">GPA</a>
+                    <a href="cgpa-calculator.html" class="text-blue-800 font-semibold hover:text-blue-600">CGPA</a>
+                    <a href="aboutus.html" class="text-gray-600 hover:text-blue-600">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600">Contact Us</a>
+                    <a href="user-manual.html" class="text-gray-600 hover:text-blue-600">User Manual</a>
+                    <a href="privacy.html" class="text-gray-600 hover:text-blue-600">Privacy Policy</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-white z-20 flex flex-col items-center justify-center space-y-8 text-lg">
+        <button id="close-menu" class="absolute top-4 right-4 text-2xl text-gray-600"><i
+                class="fas fa-times"></i></button>
+        <a href="index.html" class="text-gray-600">Home</a>
+        <a href="gpa-calculator.html" class="text-gray-600">GPA</a>
+        <a href="cgpa-calculator.html" class="text-blue-800 font-semibold">CGPA</a>
+        <a href="aboutus.html" class="text-gray-600">About Us</a>
+        <a href="contact.html" class="text-gray-600">Contact Us</a>
+        <a href="user-manual.html" class="text-gray-600">User Manual</a>
+        <a href="privacy.html" class="text-gray-600">Privacy Policy</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">Cumulative GPA (CGPA) Calculator</h1>
+                        <p id="selection-info" class="text-blue-100">Enter your GPA for each semester</p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <button id="back-button"
+                            class="bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition duration-200">
+                            <i class="fas fa-arrow-left mr-2"></i> Back to GPA Calculator
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-gray-100 px-6 py-2">
+                <div class="w-full bg-gray-300 rounded-full h-2">
+                    <div id="progress-bar" class="progress-bar h-2 rounded-full bg-blue-600" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-sm text-gray-600 mt-1 text-center">0% Complete</p>
+            </div>
+
+            <!-- Instructions -->
+            <div class="p-6 bg-blue-50 border-b border-blue-100">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-info-circle text-blue-500 text-xl mt-1"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-blue-800">How to calculate your CGPA</h3>
+                        <div class="mt-2 text-sm text-blue-600">
+                            <p>CGPA is calculated using the formula: <span class="font-mono">CGPA = Σ(GPA × Credit
+                                    Hours) / Σ(Credit Hours)</span></p>
+                            <p class="mt-1">Enter your GPA and total credit hours for each semester you've completed.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semesters Input Form -->
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800">Semester GPA Records</h2>
+                    <button id="add-semester"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Add Semester
+                    </button>
+                </div>
+
+                <div id="semesters-container" class="space-y-4">
+                    <!-- Semesters will be dynamically added here -->
+                    <div class="semester-card bg-gray-50 p-4 rounded-lg border border-gray-200 fade-in">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div class="flex-grow">
+                                <h3 class="font-medium text-gray-800">Semester 1</h3>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <label class="mr-2 text-sm font-medium text-gray-700">GPA:</label>
+                                    <input type="number" min="0" max="4" step="0.01"
+                                        class="gpa-input w-20 py-1 px-3 border border-gray-300 rounded-lg text-center"
+                                        placeholder="0.00-4.00" data-semester="1" oninput="updateProgress()">
+                                </div>
+                                <div>
+                                    <label class="mr-2 text-sm font-medium text-gray-700">Credits:</label>
+                                    <input type="number" min="0" max="30"
+                                        class="credit-input w-20 py-1 px-3 border border-gray-300 rounded-lg text-center"
+                                        placeholder="0-30" data-semester="1" oninput="updateProgress()">
+                                </div>
+                                <button class="remove-semester text-red-600 hover:text-red-800">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button id="calculate-button"
+                        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-calculator mr-2"></i> Calculate CGPA
+                    </button>
+                    <button id="reset-button"
+                        class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-redo mr-2"></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section (Initially Hidden) -->
+            <div id="results-section" class="hidden bg-gray-50 border-t border-gray-200 p-6 fade-in">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">CGPA Results</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- CGPA Result Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h3 class="text-lg font-medium text-gray-600 mb-2">Your Cumulative GPA</h3>
+                        <div class="text-4xl font-bold text-blue-600" id="cgpa-result">0.00</div>
+                        <div class="mt-2 text-sm text-gray-500">Based on all semesters</div>
+                    </div>
+
+                    <!-- Summary Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-medium text-gray-600 mb-3">Academic Summary</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Semesters:</span>
+                                <span class="font-medium" id="total-semesters">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Credit Hours:</span>
+                                <span class="font-medium" id="total-credits">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Grade Points:</span>
+                                <span class="font-medium" id="total-grade-points">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Results Table -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <h3 class="bg-gray-100 px-6 py-3 font-medium text-gray-700">Semester-wise Results</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Semester</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        GPA</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Credit Hours</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Grade Points</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-table-body" class="bg-white divide-y divide-gray-200">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Next Step Buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button id="download-pdf"
+                        class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-file-pdf mr-2"></i> Download PDF
+                    </button>
+                    <button id="start-over"
+                        class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-redo mr-2"></i> Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">UOS Calculator</h3>
+                    <p class="text-gray-400">A tool by <strong>Salman Khan and Shayan Asim CS Batch 12</strong> to help students calculate their GPA and CGPA
+                        accurately.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-200">Home</a>
+                        </li>
+                        <li><a href="gpa-calculator.html" class="text-gray-400 hover:text-white transition duration-200">GPA
+                                Calculator</a></li>
+                        <li><a href="cgpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">CGPA Calculator</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition duration-200">Privacy
+                                Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="user-manual.html" class="text-gray-400 hover:text-white transition duration-200">User
+                                Manual</a></li>
+                        <li>
+                            <a href="aboutus.html" class="text-gray-400 hover:text-white transition duration-200">About
+                                Us</a>
+                        </li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-200">Contact
+                                Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">University Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://uoswabi.edu.pk/" target="_blank"
+                                class="text-gray-400 hover:text-white transition duration-200">Official Website</a></li>
+                        <li><a href="https://admission-uos.tallymarkscloud.com/application/index.php" target="_blank"
+                                class="text-gray-400 hover:text-white transition duration-200">Admissions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-sm text-gray-400 mt-2">© 2023 University of Swabi GPA Calculator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="JS\cgpa.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UOS GPA/CGPA Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom scrollbar for subject list */
+        .subject-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .subject-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .subject-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .subject-list::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+            border-radius: 4px;
+        }
+
+        .subject-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Animation for subject list */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            accent-color: #2563eb;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-800">
+                        <i class="fas fa-calculator mr-2"></i>University of Swabi GPA
+                        Calculator</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-blue-800 font-semibold hover:text-blue-600">Home</a>
+                    <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600">GPA</a>
+                    <a href="cgpa-calculator.html" class="text-gray-600 hover:text-blue-600">CGPA</a>
+                    <a href="aboutus.html" class="text-gray-600 hover:text-blue-600">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600">Contact Us</a>
+                    <a href="user-manual.html" class="text-gray-600 hover:text-blue-600">User Manual</a>
+
+                    <!-- Authentication Section -->
+                    <div id="auth-nav-container">
+                        <a href="login.html" class="text-gray-600 hover:text-blue-600">Login</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-white z-20 flex flex-col items-center justify-center space-y-8 text-lg">
+        <button id="close-menu" class="absolute top-4 right-4 text-2xl text-gray-600">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" class="text-blue-800 font-semibold">Home</a>
+        <a href="gpa-calculator.html" class="text-gray-600">GPA</a>
+        <a href="cgpa-calculator.html" class="text-gray-600">CGPA</a>
+        <a href="aboutus.html" class="text-gray-600">About Us</a>
+        <a href="contact.html" class="text-gray-600">Contact Us</a>
+        <a href="user-manual.html" class="text-gray-600">User Manual</a>
+
+        <!-- Mobile Authentication Section -->
+        <div id="mobile-auth-container">
+            <a href="login.html" class="text-gray-600">Login</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center pt-24 pb-16 px-4">
+        <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <!-- Left side - University Image -->
+                <div class="hidden md:block md:w-2/5 bg-blue-900">
+                    <div class="h-full bg-gradient-to-br from-blue-800 to-indigo-900 flex items-center justify-center">
+                        <div class="text-center p-8">
+                            <a href="https://uoswabi.edu.pk/" target="_blank">
+                                <i class="fas fa-graduation-cap text-white text-6xl mb-4"></i>
+                                <h2 class="text-white text-2xl font-bold mb-2">University of Swabi</h2>
+                            </a>
+                            <p class="text-blue-200">GPA/CGPA Calculator</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side - Form -->
+                <div class="w-full md:w-3/5 py-8 px-6 md:px-10">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">GPA/CGPA Calculator</h1>
+                        <p class="text-blue-600"><a href="https://uoswabi.edu.pk/" target="_blank">University of
+                                Swabi</a></p>
+                        <p class="text-sm text-gray-500 mt-4">Welcome! Please select your department and semester to get
+                            started.</p>
+                    </div>
+
+                    <!-- Notice: Name on PDF only when logged in -->
+                    <div class="mb-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-exclamation-circle text-yellow-600 mt-0.5 mr-3"></i>
+                            <div class="text-sm text-yellow-800">
+                                <p class="font-medium">Important Note</p>
+                                <p class="mt-1">If you are <span class="font-semibold">not logged in</span>, your PDF results will be generated <span class="font-semibold">without your name</span>.</p>
+                                <p class="mt-1">To show your name on the PDF results, please <a href="login.html" class="text-blue-700 underline">Login</a> or <a href="login.html" class="text-blue-700 underline">Sign Up</a> first.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="selection-form">
+                        <!-- Department Selection -->
+                        <div class="mb-6">
+                            <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Select
+                                Department</label>
+                            <select id="department"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                <option value="">Choose your department</option>
+                                <option value="Agriculture">Agriculture</option>
+                                <option value="Biotechnology">Biotechnology</option>
+                                <option value="Botany">Botany</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="Economics">Economics</option>
+                                <option value="Education">Education</option>
+                                <option value="English">English</option>
+                                <option value="Environmental Sciences">Environmental Sciences</option>
+                                <option value="Geology">Geology</option>
+                                <option value="International Relations">International Relations</option>
+                                <option value="Islamic and Arabic Studies">Islamic and Arabic Studies</option>
+                                <option value="Law">Law</option>
+                                <option value="Management Sciences">Management Sciences</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Microbiology">Microbiology</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Political Science">Political Science</option>
+                                <option value="Psychology">Psychology</option>
+                                <option value="Sociology">Sociology</option>
+                                <option value="Tourism and Hotel Management">Tourism and Hotel Management</option>
+                                <option value="Urdu">Urdu</option>
+                                <option value="Zoology">Zoology</option>
+                                
+                            </select>
+                        </div>
+
+                        <!-- Semester Selection -->
+                        <div class="mb-6">
+                            <label for="semester" class="block text-sm font-medium text-gray-700 mb-2">Select
+                                Semester</label>
+                            <select id="semester"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                <option value="">Choose your semester</option>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                        </div>
+
+                        <!-- Subject Selection (Initially Hidden) -->
+                        <div id="subject-section" class="hidden mb-6 fade-in">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Subjects</label>
+                            <div class="subject-list bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <p class="text-gray-500 text-sm text-center">Select a department and semester to view
+                                    subjects</p>
+                            </div>
+                        </div>
+
+                        <!-- Next Button -->
+                        <div class="mt-10">
+                            <button type="button" id="next-button"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                                Next <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">UOS Calculator</h3>
+                    <p class="text-gray-400">A tool by <strong>Salman Khan and Shayan Asim CS Batch 12</strong> to help students
+                        calculate their GPA and CGPA
+                        accurately.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-200">Home</a>
+                        </li>
+                        <li><a href="gpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">GPA
+                                Calculator</a></li>
+                        <li><a href="cgpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">CGPA Calculator</a></li>
+                        <li><a href="privacy.html"
+                                class="text-gray-400 hover:text-white transition duration-200">Privacy
+                                Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="user-manual.html"
+                                class="text-gray-400 hover:text-white transition duration-200">User
+                                Manual</a></li>
+                        <li>
+                            <a href="aboutus.html" class="text-gray-400 hover:text-white transition duration-200">About
+                                Us</a>
+                        </li>
+                        <li><a href="contact.html"
+                                class="text-gray-400 hover:text-white transition duration-200">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">University Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://uoswabi.edu.pk/" target="_blank"
+                                class="text-gray-400 hover:text-white transition duration-200">Official Website</a></li>
+                        <li><a href="https://admission-uos.tallymarkscloud.com/application/index.php" target="_blank"
+                                class="text-gray-400 hover:text-white transition duration-200">Admissions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-sm text-gray-400 mt-2">© 2023 University of Swabi GPA Calculator. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="JS\index.js"></script>
+    <script src="JS\subjects.js"></script>
+    <!-- At the bottom of index.html, after the other scripts -->
+<script>
+    // Debug script
+    setTimeout(function() {
+        console.log('=== DEBUG INFO ===');
+        console.log('window.universityData exists:', typeof window.universityData !== 'undefined');
+        console.log('Department select value:', document.getElementById('department').value);
+        console.log('Semester select value:', document.getElementById('semester').value);
+        
+        // Test manual subject loading
+        if (window.universityData && window.universityData['computer-science']) {
+            console.log('Computer Science subjects:', window.universityData['computer-science'].length);
+            
+            // Manually trigger subject loading
+            const deptSelect = document.getElementById('department');
+            const semSelect = document.getElementById('semester');
+            deptSelect.value = 'computer-science';
+            semSelect.value = '1';
+            
+            // Trigger change events
+            deptSelect.dispatchEvent(new Event('change'));
+            semSelect.dispatchEvent(new Event('change'));
+        }
+    }, 1000);
+</script>
+</body>
+
+</html>

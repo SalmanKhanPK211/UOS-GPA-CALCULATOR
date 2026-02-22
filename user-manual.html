@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual - UOS GPA/CGPA Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .manual-section {
+            transition: all 0.3s ease;
+        }
+
+        .manual-section:hover {
+            transform: translateY(-3px);
+        }
+
+        .step-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: none;
+            z-index: 99;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: rgba(59, 130, 246, 0.2);
+            z-index: -1;
+            transition: height 0.3s ease;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted #3b82f6;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #3b82f6;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-800"><i class="fas fa-calculator mr-2"></i>UOS
+                        Calculator</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+                    <a href="gpa-calculator.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+                    <a href="cgpa-calculator.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+                    <a href="aboutus.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">About US</a>
+                    <a href="contact.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">Contact Us</a>
+                        <a href="user-manual.html" class="text-blue-800 font-semibold transition duration-200">User Manual</a>
+                    <a href="privacy.html"
+                        class="text-gray-600 hover:text-blue-600 transition duration-200">Privacy Policy</a>
+                    
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-white z-50 flex flex-col items-center justify-center space-y-8 text-lg">
+        <button id="close-menu" class="absolute top-4 right-4 text-2xl text-gray-600"><i
+                class="fas fa-times"></i></button>
+        <a href="index.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+        <a href="gpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">GPA</a>
+        <a href="cgpa-calculator.html" class="text-gray-600 hover:text-blue-600 transition duration-200">CGPA</a>
+        <a href="aboutus.html" class="text-gray-600 hover:text-blue-600 transition duration-200">About Us</a>
+        <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Contact Us</a>
+        <a href="user-manual.html" class="text-blue-800 font-semibold transition duration-200">User Manual</a>
+        <a href="privacy.html" class="text-gray-600 hover:text-blue-600 transition duration-200">Privacy Policy</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 max-w-6xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">User Manual</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Learn how to use the UOS GPA/CGPA Calculator efficiently
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Step-by-Step
+                    Guide</span>
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Tips & Tricks</span>
+                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Video
+                    Tutorials</span>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 sticky top-20 z-10 fade-in">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Navigation</h2>
+            <div class="flex flex-wrap gap-3">
+                <a href="#getting-started"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Getting
+                    Started</a>
+                <a href="#gpa-guide"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">GPA
+                    Calculation</a>
+                <a href="#cgpa-guide"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">CGPA
+                    Calculation</a>
+                <a href="#pdf-export"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">PDF
+                    Export</a>
+                <a href="#tips"
+                    class="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-100 transition duration-200">Tips
+                    & Tricks</a>
+            </div>
+        </div>
+
+        <!-- User Manual Content -->
+        <div class="space-y-12">
+            <!-- Getting Started -->
+            <section id="getting-started" class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Getting Started</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <p class="text-gray-600 mb-6">Welcome to the University of Swabi GPA/CGPA Calculator! This tool
+                        helps you calculate your Grade Point Average (GPA) and Cumulative Grade Point Average (CGPA)
+                        quickly and accurately.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-blue-50 p-5 rounded-lg">
+                            <div class="text-blue-600 text-2xl mb-3"><i class="fas fa-lightbulb"></i></div>
+                            <h3 class="font-semibold text-gray-800 mb-2">What You'll Need</h3>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                <li>Your department information</li>
+                                <li>Semester details</li>
+                                <li>Subject names and credit hours</li>
+                                <li>Your obtained marks for each subject</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-5 rounded-lg">
+                            <div class="text-green-600 text-2xl mb-3"><i class="fas fa-clock"></i></div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Time Required</h3>
+                            <p class="text-gray-600">The entire process takes less than 5 minutes once you have your
+                                information ready.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GPA Calculation Guide -->
+            <section id="gpa-guide" class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">GPA Calculation Guide</h2>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-6">Follow these steps to calculate your Semester GPA:</p>
+
+                        <div class="space-y-8">
+                            <!-- Step 1 -->
+                            <div class="step-card bg-blue-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        1</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Select Your Department and Semester
+                                    </h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">On the <a href="index.html"
+                                        class="text-blue-600 hover:underline">home page</a>, choose your department and
+                                    current semester from the dropdown menus.</p>
+                                <div class="bg-white p-4 rounded border border-gray-200">
+                                    <p class="text-sm text-gray-500"><i
+                                            class="fas fa-lightbulb text-yellow-500 mr-2"></i> <span
+                                            class="font-medium">Pro Tip:</span> If you don't see your department listed,
+                                        contact your department office for assistance.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="step-card bg-blue-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        2</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Select Your Subjects</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">After selecting your department and semester, you'll see a
+                                    list of subjects. Check the boxes next to the subjects you're currently taking.</p>
+                                <div class="bg-white p-4 rounded border border-gray-200">
+                                    <p class="text-sm text-gray-500"><i
+                                            class="fas fa-lightbulb text-yellow-500 mr-2"></i> <span
+                                            class="font-medium">Pro Tip:</span> You can select all subjects by clicking
+                                        the "Select All" button if available.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="step-card bg-blue-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        3</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Enter Your Marks</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">On the GPA calculation page, enter your obtained marks for
+                                    each subject. The system will automatically calculate your GPA as you type.</p>
+                                <div class="bg-white p-4 rounded border border-gray-200">
+                                    <p class="text-sm text-gray-500"><i
+                                            class="fas fa-lightbulb text-yellow-500 mr-2"></i> <span
+                                            class="font-medium">Pro Tip:</span> Use the tab key to quickly navigate
+                                        between input fields.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="step-card bg-blue-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        4</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">View Your Results</h3>
+                                </div>
+                                <p class="text-gray-600">After entering all marks, your GPA will be calculated
+                                    automatically. You'll see a detailed breakdown of your results, including
+                                    subject-wise grade points.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3 border-t border-gray-200">
+                        <p class="text-sm text-gray-500"><i class="fas fa-info-circle text-blue-500 mr-2"></i> GPA is
+                            calculated using the formula: <span class="font-mono">GPA = Σ(Grade Point × Credit Hours) /
+                                Σ(Credit Hours)</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CGPA Calculation Guide -->
+            <section id="cgpa-guide" class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">CGPA Calculation Guide</h2>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-6">Follow these steps to calculate your Cumulative GPA (CGPA):</p>
+
+                        <div class="space-y-8">
+                            <!-- Step 1 -->
+                            <div class="step-card bg-green-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        1</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Navigate to CGPA Calculator</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">From the GPA results page, click the "Calculate CGPA"
+                                    button, or go directly to the <a href="cgpa-calculator.html"
+                                        class="text-green-600 hover:underline">CGPA calculator page</a>.</p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="step-card bg-green-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        2</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Add Your Previous Semesters</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">Click the "Add Semester" button for each previous semester
+                                    you want to include in your CGPA calculation.</p>
+                                <div class="bg-white p-4 rounded border border-gray-200">
+                                    <p class="text-sm text-gray-500"><i
+                                            class="fas fa-lightbulb text-yellow-500 mr-2"></i> <span
+                                            class="font-medium">Pro Tip:</span> The system automatically includes your
+                                        current semester GPA if you came from the GPA calculator.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="step-card bg-green-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        3</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Enter GPA and Credit Hours</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">For each semester, enter your GPA and the total credit
+                                    hours for that semester.</p>
+                                <div class="bg-white p-4 rounded border border-gray-200">
+                                    <p class="text-sm text-gray-500"><i
+                                            class="fas fa-lightbulb text-yellow-500 mr-2"></i> <span
+                                            class="font-medium">Pro Tip:</span> You can find your previous semester GPAs
+                                        on your official transcript or student portal.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="step-card bg-green-50 p-5 rounded-lg">
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">
+                                        4</div>
+                                    <h3 class="text-xl font-semibold text-gray-800">View Your CGPA Results</h3>
+                                </div>
+                                <p class="text-gray-600">Click "Calculate CGPA" to see your cumulative GPA. The results
+                                    will show a semester-by-semester breakdown and your overall CGPA.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3 border-t border-gray-200">
+                        <p class="text-sm text-gray-500"><i class="fas fa-info-circle text-green-500 mr-2"></i> CGPA is
+                            calculated using the formula: <span class="font-mono">CGPA = Σ(GPA × Credit Hours) /
+                                Σ(Credit Hours)</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PDF Export Guide -->
+            <section id="pdf-export" class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">PDF Export Guide</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <p class="text-gray-600 mb-6">You can save your GPA/CGPA results as a PDF document for printing or
+                        future reference.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-5 rounded-lg">
+                            <div class="text-purple-600 text-2xl mb-3"><i class="fas fa-file-pdf"></i></div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Saving Your Results</h3>
+                            <p class="text-gray-600">After calculating your GPA or CGPA, click the "Download PDF Report"
+                                button to generate and save a PDF version of your results.</p>
+                        </div>
+                        <div class="bg-purple-50 p-5 rounded-lg">
+                            <div class="text-purple-600 text-2xl mb-3"><i class="fas fa-print"></i></div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Printing Your Results</h3>
+                            <p class="text-gray-600">You can print the PDF report or save it digitally for your records.
+                                The PDF includes all relevant details in a professional format.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-700">
+                                    <span class="font-medium">Note:</span> The PDF report does not replace official
+                                    university transcripts. It is for personal reference only.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips & Tricks -->
+            <section id="tips" class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Tips & Tricks</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-5 rounded-lg">
+                            <h3 class="font-semibold text-gray-800 mb-3"><i class="fas fa-bolt text-blue-600 mr-2"></i>
+                                Efficiency Tips</h3>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li>Use the Tab key to navigate quickly between input fields</li>
+                                <li>Bookmark the calculator for easy access</li>
+                                <li>Have your transcript handy before starting</li>
+                                <li>Use the "Select All" option when choosing subjects</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-5 rounded-lg">
+                            <h3 class="font-semibold text-gray-800 mb-3"><i
+                                    class="fas fa-check-circle text-green-600 mr-2"></i> Best Practices</h3>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li>For best experience use the website on PC</li>
+                                <li>Double-check your entered marks for accuracy</li>
+                                <li>Save your results as PDF for future reference</li>
+                                <li>Compare your calculated GPA with official records</li>
+                                <li>Contact your department if you notice discrepancies</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-gray-50 p-5 rounded-lg">
+                        <h3 class="font-semibold text-gray-800 mb-3"><i
+                                class="fas fa-question-circle text-gray-600 mr-2"></i> Frequently Asked Questions</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Q: Is this calculator official?</h4>
+                                <p class="text-gray-600 text-sm mt-1">A: This calculator is provided by the University
+                                    of Swabi for student use, but always verify with your official transcript.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Q: Can I use this on my mobile device?</h4>
+                                <p class="text-gray-600 text-sm mt-1">A: Yes, the calculator is fully responsive and
+                                    works on all devices.But for better experience use it on PC</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Q: What if my department isn't listed?</h4>
+                                <p class="text-gray-600 text-sm mt-1">A: Please contact your department office to have
+                                    your subjects added to the system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Section -->
+            <section class="manual-section fade-in">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6">Need More Help?</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <p class="text-gray-600 mb-6">If you're still having trouble or have additional questions, we're
+                        here to help!</p>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div
+                                class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Email Support</h3>
+                            <p class="text-gray-600 text-sm">salmankhan334356@gmail.com</p>
+                        </div>
+                        <div class="text-center">
+                            <div
+                                class="bg-green-100 text-green-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-file-alt text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Documentation</h3>
+                            <p class="text-gray-600 text-sm">Full technical documentation</p>
+                        </div>
+                        <div class="text-center">
+                            <div
+                                class="bg-purple-100 text-purple-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-video text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Video Tutorials</h3>
+                            <p class="text-gray-600 text-sm">Step-by-step video guides</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-200">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">UOS Calculator</h3>
+                    <p class="text-gray-400">A tool by <strong>Salman Khan and Shayan Asim CS Batch 12</strong> to help students calculate their GPA and CGPA
+                        accurately.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-200">Home</a>
+                        </li>
+                        <li><a href="gpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">GPA Calculator</a></li>
+                        <li><a href="cgpa-calculator.html"
+                                class="text-gray-400 hover:text-white transition duration-200">CGPA Calculator</a></li>
+                        <li><a href="privacy.html"
+                                class="text-gray-400 hover:text-white transition duration-200">Privacy Policy</a></li>
+                        <li><a href="https://uoswabi.edu.pk/"
+                                class="text-gray-400 hover:text-white transition duration-200">University of Swabi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="user-manual.html" class="text-gray-400 hover:text-white transition duration-200">User Manual</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Video
+                                Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-gray-400 mr-3"></i>
+                            <span class="text-gray-400">University of Swabi, Swabi, KPK, Pakistan</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-3"></i>
+                            <span class="text-gray-400"><a href="mailto:salmankhan334356@gmail.com"><strong>salmankhan334356@gmail.com</strong></a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 University of Swabi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+
+        document.getElementById('close-menu').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            observer.observe(element);
+        });
+    </script>
+</body>
+
+</html>
